@@ -1,4 +1,4 @@
-from flaskapp import render_template, url_for, flash, redirect
+from flask import render_template, url_for, flash, redirect
 from flaskapp import app
 from flaskapp.forms import RegistrationForm, LoginForm
 from flaskapp.models import User, Post
