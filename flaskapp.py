@@ -7,7 +7,7 @@ posts = [
         'title': 'Blog Post 1',
         'content': 'first post content',
         'date_posted': 'APRIL 20'
-    }
+    },
     { 
         'author': 'Tommy Schafer',
         'title': 'Blog Post 10',
