@@ -115,7 +115,7 @@ def post(post_id):
     
 @route("/post/<int:post_id>/update")
 @login_required
-def update_post(post_id, methods=['GET', 'POST']:
+def update_post(post_id, methods=['GET', 'POST']):
     post = Post.query.get_or_404(post_id)
     if post.author != current_user:
         abort(403)
