@@ -134,7 +134,7 @@ def update_post(post_id):
     
 @app.route("/post/<int:post_id>/delete_post/")
 @login_required
-def delete_post(post_id)
+def delete_post(post_id):
     post = Post.query.get_or_404(post_id)
     if post.author != current_user:
         abort(403)
