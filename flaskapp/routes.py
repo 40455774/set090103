@@ -139,6 +139,6 @@ def delete_post(post_id):
     if post.author != current_user:
         abort(403)
     db.session.delete(post)
-    deb.session.commit()
+    db.session.commit()
     flash('Your post has been deleted!')
     return redirect(url_for('home'))
