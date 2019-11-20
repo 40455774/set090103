@@ -181,7 +181,7 @@ def reset_request():
         flash('An email has been sent with instructions how to reset your password.', 'info')
         return redirect(url_for('login'))
     
-    return render_template('reset_request.html' title='Reset Password', form=form)
+    return render_template('reset_request.html', title='Reset Password', form=form)
     
 
 @app.route("/reset_password/<token>", methods=['GET', 'POST'])
