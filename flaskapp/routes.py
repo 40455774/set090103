@@ -113,9 +113,9 @@ def post(post_id):
     post = Post.query.get_or_404(post_id)
     return render_template('post.html', title=post.title, post=post)
     
-@route("/post/<int:post_id>/update")
+@route("/post/<int:post_id>/update", methods=['GET', 'POST'])
 @login_required
-def update_post(post_id, methods=['GET', 'POST']):
+def update_post(post_id):
     post = Post.query.get_or_404(post_id)
     if post.author != current_user:
         abort(403)
