@@ -15,7 +15,7 @@ login_manager.login_view = 'login'
 login_manager.login_message_category = 'danger'
 
 app.config['MAIL_SERVER'] = 'smtp-mail.outlook.com'
-app.config['MAIL_PORT'] = '993'
+app.config['MAIL_PORT'] = '25'
 app.config['MAIL_USE_TLS'] = 'True'
 app.config['MAIL_USERNAME'] = '40455774@napier.ac.uk'
 app.config['MAIL_PASSWORD'] = 'kYcwee34!'
