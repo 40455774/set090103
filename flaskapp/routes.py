@@ -158,7 +158,7 @@ def user_posts(username):
 def send_reset_email(user):
     token = user.get_reset_token()
     msg = Message('Password Reset Request', 
-                    sender='40455774@napier.ac.uk', 
+                    sender='40455774@live.napier.ac.uk', 
                     recipients=[user.email])
                     
     msg.body =  ''' To reset your password, visit the following link:
