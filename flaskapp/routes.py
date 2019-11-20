@@ -47,7 +47,7 @@ def login():
         
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user, remember=form.remember.data)
-            flash('Welcome to the site, {}'.format({{ current_user.username }}), 'success')
+            flash('Welcome to the site, {}', 'success')
             next_page = request.args.get('next')
             return redirect(next_page) if  next_page else redirect(url_for('home'))
         else:
