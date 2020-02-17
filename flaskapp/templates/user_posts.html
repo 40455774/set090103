@@ -2,8 +2,8 @@
 {% block content%}
 
 	<div class="content-section">
-		<h1 class="mb-3">Posts by {{ user.username }} <h1>
-		<small>{{ posts.total }} Total Posts</small>
+		<h1 class="mb-3">{{ user.username }}'s Journey <h1>
+		<small>{{ posts.total }} Total Milestones</small>
 	</div>
 
 	{% for post in posts.items %}

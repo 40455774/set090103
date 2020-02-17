@@ -28,12 +28,13 @@ def register():
     form = RegistrationForm()
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-        user = User(username=form.username.data, email=form.email.data, password=hashed_password)
+        user = User(username=form.username.data, email=form.email.data, password=hashed_password, image_file=form.picture.data)
         db.session.add(user)
         db.session.commit()
         flash('Your account has been created! You can now log in.', 'success')
         return redirect(url_for('login'))
     return render_template('register.html', title="Register", form=form)
+    
     
 @app.route("/login", methods=['GET', 'POST'])
 def login():
@@ -47,7 +48,7 @@ def login():
         
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user, remember=form.remember.data)
-            flash('Welcome to the site, {}', 'success'.format(current_user.username))
+            flash('You have successfully logged in.', 'success')
             next_page = request.args.get('next')
             return redirect(next_page) if  next_page else redirect(url_for('home'))
         else:
@@ -66,6 +67,22 @@ def save_picture(form_picture):
     f_name, f_ext = os.path.splitext(form_picture.filename)
     picture_fn = random_hex + f_ext
     picture_path = os.path.join(app.root_path, 'static/profile_pics', picture_fn)
+    
+    # Image Resizing Code #
+    output_size = (125, 125)
+    i = Image.open(form_picture)
+    i.thumbnail(output_size)
+    
+    #Image Saving Code #
+    i.save(picture_path)
+    
+    return picture_fn
+    
+def save_picture_post(form_picture):
+    random_hex = secrets.token_hex(8)
+    f_name, f_ext = os.path.splitext(form_picture.filename)
+    picture_fn = random_hex + f_ext
+    picture_path = os.path.join(app.root_path, 'static/mile_pics', picture_fn)
     
     # Image Resizing Code #
     output_size = (125, 125)
@@ -103,13 +120,16 @@ def account():
 def new_post():
     form = PostForm()
     if form.validate_on_submit():
-        post = Post(title=form.title.data, content=form.content.data, author=current_user)
+        if form.picture.data:
+            image_file = save_picture_post(form.picture.data)
+            image_file = url_for('static', filename='mile_pics/' + image_file)
+        post = Post(title=form.title.data, content=form.content.data, author=current_user, image_file=form.picture.data)
         db.session.add(post)
         db.session.commit()
         flash('Your post has been created!', 'success')
         return redirect(url_for('home'))
     return render_template('create_post.html', title='New Post', form=form, legend='New Post')
-    
+ 
 @app.route("/post/<int:post_id>")
 def post(post_id):
     post = Post.query.get_or_404(post_id)
@@ -126,6 +146,7 @@ def update_post(post_id):
     if form.validate_on_submit():
         post.title = form.title.data
         post.content = form.content.data
+        post.picture = form.picture.data
         db.session.commit()
         flash('Your post has been updated!', 'success')
         return redirect(url_for('post', post_id=post.id))
@@ -206,3 +227,5 @@ def reset_token(token):
         return redirect(url_for('login'))
         
     return render_template('reset_token.html', title='Reset Password', form=form)
+    
+#@app.route() ///UPLOAD IMAGES\\\ https://www.youtube.com/watch?v=6WruncSoCdI
